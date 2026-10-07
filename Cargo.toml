@@ -1,0 +1,32 @@
+[package]
+name = "kd_ocr"
+version = "1.0.0"
+edition = "2021"
+description = "Screen To Kd - reads RESULTS screenshots and builds a paste-ready scoreboard (pure Rust OCR)"
+
+[features]
+default = ["gui"]
+gui = ["dep:eframe", "dep:rfd"]
+
+[dependencies]
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "bmp", "webp"] }
+matrixmultiply = "0.3"
+rayon = "1.10"
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
+eframe = { version = "0.31", optional = true, default-features = false, features = ["glow", "default_fonts", "wayland", "x11"] }
+rfd = { version = "0.15", optional = true }
+
+[dev-dependencies]
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 4
+panic = "unwind"
+strip = true
+
+[profile.dev]
+opt-level = 2
+
+[target.'cfg(windows)'.build-dependencies]
+winresource = "0.1"
